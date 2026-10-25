@@ -23,7 +23,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <footer className="p-4 text-center">
+          Este produto usa a API do TMDB, mas não é endossado nem certificado
+          por ele.
+        </footer>
+      </body>
     </html>
   );
 }
