@@ -38,5 +38,8 @@ async function tmdb<T>(
 export const getPopularMovies = (page = 1) => 
   tmdb<MoviesResponse>("/movie/popular", { page: String(page) });
 
+export const searchMovies = (query: string, page = 1) => 
+  tmdb<MoviesResponse>("/search/movie", { query, page: String(page) });
+
 export const posterUrl = (path: string | null, size = "w500") => 
   path ? `https://image.tmdb.org/t/p/${size}${path}` : "/sem-poster.svg";
