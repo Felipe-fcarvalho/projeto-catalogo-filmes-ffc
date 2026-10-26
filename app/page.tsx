@@ -1,17 +1,16 @@
-import { MovieCard } from "@/src/components/MovieCard";
-import { getPopularMovies } from "@/src/lib/tmdb"; 
+import { Suspense } from "react";
+import { MovieList } from "@/src/components/MovieList";
 
-export default async function Home() {
-  const { results } = await getPopularMovies();
+type Props = {
+  searchParams: Promise<{ page?: string; q?: string }>;
+};
 
+export default function Home({ searchParams }: Props) {
   return (
     <main className="mx-auto max-w-6xl p-6">
-      <h1 className="mb-6 text-3xl font-bold">Filmes populares</h1>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-        {results.map((movie) =>
-          <MovieCard key={movie.id} movie={movie}/>
-        )}
-      </div>
+      <Suspense fallback={<p>Carregando filmes...</p>}>
+        <MovieList searchParams={searchParams} />
+      </Suspense>
     </main>
   );
 }
