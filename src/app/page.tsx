@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { MovieList } from "@/src/components/MovieList";
+import { MovieList } from "../components/MovieList";
 
 type Props = {
   searchParams: Promise<{ page?: string; q?: string }>;
