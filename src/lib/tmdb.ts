@@ -1,3 +1,5 @@
+import { cacheLife } from "next/cache";
+
 const BASE_URL = "https://api.themoviedb.org/3"
 
 export type Movie = {
@@ -16,6 +18,25 @@ export type MoviesResponse = {
   total_results: number;
 };
 
+export type MovieDetails = { 
+  id: number;
+  title: string;
+  tagline: string;
+  overview: string;
+  poster_path: string | null;
+  backdrop_path: string | null;
+  release_date: string;
+  runtime: number | null;
+  vote_average: number;
+  genres: { id: number; name: string }[];
+};
+
+export class TmdbError extends Error { 
+  constructor(public status: number) { 
+    super(`Erro TMDB: ${status}`);
+  }
+}
+
 async function tmdb<T>(
   path: string,
   params: Record<string, string> = {}
@@ -31,8 +52,24 @@ async function tmdb<T>(
     next: { revalidate: 3600 }, 
 });
 
-  if (!res.ok) throw new Error(`Erro TMDB: ${res.status}`);
+  if (!res.ok) throw new TmdbError(res.status);
   return res.json();
+}
+
+export async function getMovieDetails(
+  id: string
+): Promise<MovieDetails | null> {
+  "use cache";
+  cacheLife("hours");
+
+  if (!/^\d+$/.test(id)) return null;
+
+  try {
+    return await tmdb<MovieDetails>(`/movie/${id}`);
+  } catch (error) {
+    if (error instanceof TmdbError && error.status === 404) return null;
+    throw error;
+  }
 }
 
 export const getPopularMovies = (page = 1) => 
