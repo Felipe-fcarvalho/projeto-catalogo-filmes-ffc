@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Movie, posterUrl } from "../lib/tmdb";
+import { Movie, posterUrl } from "../lib/movie";
 
 export function MovieCard({ movie }: { movie: Movie }) {
   const year = movie.release_date?.slice(0, 4);
