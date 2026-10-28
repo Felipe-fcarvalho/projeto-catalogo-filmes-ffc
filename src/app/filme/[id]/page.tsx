@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { DetailsSkeleton } from "@/src/components/DetailsSkeleton";
 import { MovieDetailsView } from "@/src/components/MovieDetailsView";
-import { getMovieDetails, getPopularMovies, posterUrl } from "@/src/lib/tmdb";
+import { getMovieDetails, getPopularMovies } from "@/src/lib/tmdb";
+import { posterUrl } from "@/src/lib/movie";
 
 type Props = { params: Promise<{ id: string }> };
 
