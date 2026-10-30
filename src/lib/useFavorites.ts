@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useSyncExternalStore } from "react";
 import type { Movie } from "./movie";
@@ -31,33 +31,41 @@ function subscribe(callback: () => void) {
   return () => {
     window.removeEventListener("storage", callback);
     window.removeEventListener(EVENT, callback);
-  }
+  };
 }
 
-function save(list: Movie[]) { 
-  try { 
+function save(list: Movie[]) {
+  try {
     localStorage.setItem(KEY, JSON.stringify(list));
     window.dispatchEvent(new Event(EVENT));
-  } catch {
-
-  }
+  } catch {}
 }
 
 export function useFavorites() {
   const favorites = useSyncExternalStore(
     subscribe,
     getSnapshot,
-    getServerSnapshot
+    getServerSnapshot,
   );
 
   const isFavorite = (id: number) => favorites.some((m) => m.id === id);
 
-  const toggle = (movie: Movie) => 
+  const toggle = (movie: Movie) =>
     save(
       isFavorite(movie.id)
-      ? favorites.filter((m) => m.id !== movie.id)
-      : [...favorites, movie]
+        ? favorites.filter((m) => m.id !== movie.id)
+        : [...favorites, movie],
     );
 
-    return { favorites, isFavorite, toggle };
+  return { favorites, isFavorite, toggle };
+}
+
+const subscribeNoop = () => () => {};
+
+export function useHydrated() {
+  return useSyncExternalStore(
+    subscribeNoop,
+    () => true,
+    () => false,
+  );
 }

@@ -17,11 +17,25 @@ export function Pagination({ page, totalPages, query }: Props) {
       aria-label="Paginação"
       className="mt-8 flex items-center justify-center gap-4"
     >
-      {page > 1 && <Link href={href(page - 1, query)}>← Anterior</Link>}
+      {page > 1 && (
+        <Link
+          href={href(page - 1, query)}
+          className="rounded-lg px-3 py-2 hover:bg-zinc-800"
+        >
+          ← Anterior
+        </Link>
+      )}
       <span>
         Página {page} de {totalPages}
       </span>
-      {page < totalPages && <Link href={href(page + 1, query)}>Próxima →</Link>}
+      {page < totalPages && (
+        <Link
+          href={href(page + 1, query)}
+          className="rounded-lg px-3 py-2 hover:bg-zinc-800"
+        >
+          Próxima →
+        </Link>
+      )}
     </nav>
   );
 }

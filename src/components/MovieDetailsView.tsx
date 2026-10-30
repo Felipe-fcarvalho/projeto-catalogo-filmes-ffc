@@ -30,7 +30,7 @@ export async function MovieDetailsView({
     <>
       <Link
         href="/"
-        className="mb-6 inline-block text-zinc-400 hover:text-white"
+        className="mb-6 inline-block rounded-lg px-3 py-2 hover:bg-zinc-800"
       >
         ← Voltar
       </Link>
