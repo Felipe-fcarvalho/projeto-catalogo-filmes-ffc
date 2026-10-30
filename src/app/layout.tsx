@@ -30,9 +30,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Link href="/" className="text-lg font-bold">
             Catálogo de filmes
           </Link>
-          <Link href="/favoritos" className="text-zinc-300 hover:text-white">
-            ★ Favoritos
-          </Link>
+          <nav aria-label="Principal">
+            <Link href="/favoritos" className="text-zinc-300 hover:text-white">
+              ★ Favoritos
+            </Link>
+          </nav>
         </header>
         {children}
         <footer className="p-4 text-center">
