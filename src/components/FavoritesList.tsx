@@ -13,11 +13,8 @@ function FavoriteSkeleton() {
       {Array.from({ length: 5 }, (_, i) => (
         <div
           key={i}
-          className={`overflow-hidden rounded-lg bg-zinc-900 ${i < 2 ? "" : i === 2 ? "hidden sm:block" : "hidden lg:block"}`}
-        >
-          <div className="aspect-2/3 bg-zinc-800" />
-          <div className="h-17" />
-        </div>
+          className={`aspect-2/3 rounded-lg bg-zinc-900 ${i < 2 ? "" : i === 2 ? "hidden sm:block" : "hidden lg:block"}`}
+        />
       ))}
     </div>
   );
