@@ -41,6 +41,7 @@ export async function MovieDetailsView({
           alt={`Pôster de ${movie.title}`}
           width={500}
           height={750}
+          sizes="320px"
           priority
           className="aspect-2/3 w-full max-w-xs rounded-lg object-cover"
         />
