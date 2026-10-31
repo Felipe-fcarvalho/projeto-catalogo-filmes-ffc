@@ -13,7 +13,7 @@ export function MovieCard({ movie, priority }: { movie: Movie, priority?: boolea
       <Image
         src={posterUrl(movie.poster_path, "w342") }
         alt={`Poster de ${movie.title}`}
-        width={352}
+        width={342}
         height={513}
         sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
         priority={priority}
