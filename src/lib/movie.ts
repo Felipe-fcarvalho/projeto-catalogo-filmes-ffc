@@ -1,3 +1,7 @@
+export type Genre = { id: number; name: string };
+
+export type Ordem = "popular" | "alta" | "avaliados";
+
 export type Movie = {
   id: number;
   title: string;
