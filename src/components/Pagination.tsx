@@ -1,16 +1,21 @@
 import Link from "next/link";
+import type { Ordem } from "../lib/movie";
+import { listHref } from "../lib/url";
+import { PageSelect } from "./PageSelect";
 
-type Props = { page: number; totalPages: number; query?: string };
+type Props = {
+  page: number;
+  totalPages: number;
+  query?: string;
+  genero?: number;
+  ordem?: Ordem;
+};
 
-function href(page: number, query?: string) {
-  const params = new URLSearchParams();
-  if (query) params.set("q", query);
-  params.set("page", String(page));
-  return `/?${params.toString()}`;
-}
+const linkClass = "rounded-lg px-3 py-2 hover:bg-zinc-800";
 
-export function Pagination({ page, totalPages, query }: Props) {
+export function Pagination({ page, totalPages, query, genero, ordem }: Props) {
   if (totalPages <= 1) return null;
+  const base = { q: query, genero, ordem };
 
   return (
     <nav
@@ -19,19 +24,17 @@ export function Pagination({ page, totalPages, query }: Props) {
     >
       {page > 1 && (
         <Link
-          href={href(page - 1, query)}
-          className="rounded-lg px-3 py-2 hover:bg-zinc-800"
+          href={listHref({ ...base, page: page - 1 })}
+          className={linkClass}
         >
           ← Anterior
         </Link>
       )}
-      <span>
-        Página {page} de {totalPages}
-      </span>
+      <PageSelect page={page} totalPages={totalPages} params={base} />
       {page < totalPages && (
         <Link
-          href={href(page + 1, query)}
-          className="rounded-lg px-3 py-2 hover:bg-zinc-800"
+          href={listHref({ ...base, page: page + 1  })}
+          className={linkClass}
         >
           Próxima →
         </Link>
