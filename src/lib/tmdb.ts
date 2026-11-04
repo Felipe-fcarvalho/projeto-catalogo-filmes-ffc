@@ -1,5 +1,5 @@
 import { cacheLife } from "next/cache";
-import type { Movie } from "./movie";
+import type { Movie, Genre, Ordem } from "./movie";
 import "server-only"
 
 const BASE_URL = "https://api.themoviedb.org/3"
@@ -23,6 +23,33 @@ export type MovieDetails = {
   vote_average: number;
   genres: { id: number; name: string }[];
 };
+
+export async function getGenres(): Promise<Genre[]>{
+  "use cache";
+  cacheLife("days");
+
+  const data = await tmdb<{ genres: Genre[] }>("/genre/movie/list");
+  return data.genres;
+}
+
+export function getMovies({ ordem, genero, page, }: { ordem: Ordem; genero?: number; page: number; }  ){
+  const pageParam = String(page);
+
+  if (ordem === "alta") {
+    return tmdb<MoviesResponse>("/trending/movie/week", { page: pageParam });
+  }
+  if (ordem === "popular" && !genero) {
+    return getPopularMovies(page);
+  }
+
+  const params: Record<string, string> = {
+    page: pageParam, sort_by: ordem === "avaliados" ? "vote_average.desc" : "popularity.desc",
+  };
+  if (ordem === "avaliados") params["vote_count.gte"] = "1000";
+  if (genero) params.with_genres = String(genero);
+
+  return tmdb<MoviesResponse>("/discover/movie", params);
+}
 
 export class TmdbError extends Error { 
   constructor(public status: number) { 
