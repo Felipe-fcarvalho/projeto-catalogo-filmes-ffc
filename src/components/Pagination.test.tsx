@@ -1,11 +1,14 @@
 import { render, screen } from "@testing-library/react";
-import { Pagination } from "./Pagination";
 import userEvent from "@testing-library/user-event";
+import { Pagination } from "./Pagination";
 
 const mockPush = jest.fn();
+
 jest.mock("next/navigation", () => ({
   useRouter: () => ({ push: mockPush }),
 }));
+
+beforeEach(() => mockPush.mockClear());
 
 describe("Pagination", () => {
   it("não aparece quando há uma página só", () => {
@@ -26,16 +29,25 @@ describe("Pagination", () => {
 
   it("mantém a busca nos links", () => {
     render(<Pagination page={2} totalPages={5} query="matrix" />);
-    expect(screen.getByRole("link", { name: /próxima/i })).toHaveAttribute("href", "/?q=matrix&page=3");
-    expect(screen.getByRole("link", { name: /anterior/i })).toHaveAttribute("href", "/?q=matrix&page=1");
+    expect(screen.getByRole("link", { name: /próxima/i })).toHaveAttribute(
+      "href",
+      "/?q=matrix&page=3",
+    );
+    expect(screen.getByRole("link", { name: /anterior/i })).toHaveAttribute(
+      "href",
+      "/?q=matrix&page=1",
+    );
   });
 
   it("navega para a página escolhida no seletor, mantendo a busca", async () => {
     const user = userEvent.setup();
     render(<Pagination page={1} totalPages={5} query="matrix" />);
 
-    await user.selectOptions(screen.getByRole("combobox", { name: /ir para a página/i }),"4")
-  });
+    await user.selectOptions(
+      screen.getByRole("combobox", { name: /ir para a página/i }),
+      "4",
+    );
 
-  expect(mockPush).toHaveBeenCalledWith("/?q=matrix&page=4");
+    expect(mockPush).toHaveBeenCalledWith("/?q=matrix&page=4");
+  });
 });
