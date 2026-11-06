@@ -4,7 +4,7 @@ import { ListSkeleton } from "../components/ListSkeleton";
 
 
 type Props = {
-  searchParams: Promise<{ page?: string; q?: string }>;
+  searchParams: Promise<{ page?: string; q?: string, genero?: string, ordem?: string }>;
 };
 
 export default function Home({ searchParams }: Props) {

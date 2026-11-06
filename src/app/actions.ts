@@ -8,5 +8,5 @@ export async function sortearFilme(formData: FormData){
   const genero = Number.isInteger(raw) && raw > 0 ? raw : undefined;
 
   const id = await getRandomMovieId(genero);
-  redirect(id ? `/filme${id}` : "/");
+  redirect(id ? `/filme/${id}` : "/");
 }
