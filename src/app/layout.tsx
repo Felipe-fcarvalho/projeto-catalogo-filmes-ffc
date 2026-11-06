@@ -31,6 +31,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             Catálogo de filmes
           </Link>
           <nav aria-label="Principal">
+            <Link href="/sortear" className="text-zinc-300 hover:text-white">
+              🎲 Sortear
+            </Link>
             <Link href="/favoritos" className="text-zinc-300 hover:text-white">
               ★ Favoritos
             </Link>
