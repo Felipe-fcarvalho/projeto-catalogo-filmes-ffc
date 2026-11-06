@@ -30,7 +30,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Link href="/" className="text-lg font-bold">
             Catálogo de filmes
           </Link>
-          <nav aria-label="Principal">
+          <nav aria-label="Principal" className="flex gap-4">
             <Link href="/sortear" className="text-zinc-300 hover:text-white">
               🎲 Sortear
             </Link>
