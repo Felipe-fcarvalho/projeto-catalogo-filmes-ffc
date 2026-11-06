@@ -92,6 +92,22 @@ export async function getMovieDetails(
   }
 }
 
+export async function getRandomMovieId(genre?: number): Promise<number | null> {
+  const filters: Record<string, string> = { sort_by: "vote_count.desc" };
+  if(genre) filters.with_genres = String(genre);
+
+  const first = await tmdb<MoviesResponse>("/discover/movie", { ...filters, page: "1" });
+
+  const lastPage = Math.max(1, Math.min(first.total_pages, 100));
+  const page = 1 + Math.floor(Math.random() * lastPage);
+
+  const data = page === 1 ? first : await tmdb<MoviesResponse>("/discover/movie", { ...filters, page: String(page) });
+
+  if (data.results.length === 0) return null;
+  return data.results[Math.floor(Math.random() * data.results.length)].id;
+
+}
+
 export const getPopularMovies = (page = 1) => 
   tmdb<MoviesResponse>("/movie/popular", { page: String(page) });
 

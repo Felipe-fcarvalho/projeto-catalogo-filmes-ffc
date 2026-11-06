@@ -39,7 +39,7 @@ export function SearchBar({ query, genres, genero, ordem }: Props){
         </select>
 
         <button type="submit" className="rounded-lg bg-zinc-700 px-4 py-2">
-          Aplicar
+          Filtrar
         </button>
     </form> 
   )

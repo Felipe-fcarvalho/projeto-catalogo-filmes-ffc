@@ -20,7 +20,7 @@ export function PageSelect({ page, totalPages, params }: Props) {
         onChange={(e) =>
           router.push(listHref({ ...params, page: Number(e.target.value) }))
         }
-        className="rounded-lg bg-zinc-900 px-3 py-2"
+        className="select-5 rounded-lg bg-zinc-900 px-3 py-2"
       >
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
           <option key={n} value={n}>
